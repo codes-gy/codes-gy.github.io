@@ -1,7 +1,7 @@
 ---
-title: "나의 첫 Next.js 블로그 개발기"
+title: "나의 첫 Next.js 블로그 개발"
 date: 2026-06-10
-last_modified_at: 2026-07-30
+last_modified_at: 2026-08-05
 categories:
   - "리액트"
 tags:
