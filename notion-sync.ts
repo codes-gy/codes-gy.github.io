@@ -12,7 +12,7 @@ const NOTION_API_KEY = process.env.NOTION_API_KEY;
 const cleanDatabaseId = (id: string | undefined): string => {
   if (!id) return "";
   const match = id.replace(/-/g, "").match(/[a-f0-9]{32}/i);
-  return match ? match[0] : id;
+  return match ? match[0] : id.trim();
 };
 
 const NOTION_DATABASE_ID = cleanDatabaseId(process.env.NOTION_DATABASE_ID);
@@ -21,7 +21,7 @@ if (!NOTION_API_KEY) {
   console.error("NOTION_API_KEY 환경변수가 설정되지 않았습니다.");
   process.exit(1);
 } else if (!NOTION_DATABASE_ID) {
-  console.error("NOTION_DATABASE_ID 환경변수가 설정되지 않았습니다.");
+  console.error("NOTION_DATABASE_ID 환경변수가 설정되지 않았거나 유효하지 않습니다.");
   process.exit(1);
 }
 
@@ -94,16 +94,13 @@ function parseNotionProperties(page: PageObjectResponse): NotionPostProps {
 async function syncNotionToJekyll(): Promise<void> {
   console.log("노션 데이터베이스에서 발행 글 수집 시작...");
 
-  // 노션 데이터베이스 속성명 'Published' 기준 조회
-  const response = await notion.request<{ results: Array<PageObjectResponse | Record<string, unknown>> }>({
-    path: `databases/${NOTION_DATABASE_ID}/query`,
-    method: "post",
-    body: {
-      filter: {
-        property: "Published",
-        checkbox: {
-          equals: true,
-        },
+  // SDK 공식 databases.query 메서드로 변경하여 URL 빌드 오류 방지
+  const response = await notion.dataSources.query({
+    data_source_id: NOTION_DATABASE_ID,
+    filter: {
+      property: "Published",
+      checkbox: {
+        equals: true,
       },
     },
   });
@@ -112,7 +109,7 @@ async function syncNotionToJekyll(): Promise<void> {
 
   const pages = response.results.filter(
     (result: QueryResultItem): result is PageObjectResponse =>
-      "properties" in result
+      typeof result === "object" && result !== null && "properties" in result
   );
 
   console.log(`동기화 대상 게시글: 총 ${pages.length}개`);
@@ -129,8 +126,14 @@ async function syncNotionToJekyll(): Promise<void> {
     const mdObject = n2m.toMarkdownString(mdblocks);
     const contentBody = mdObject.parent;
 
-    const safeTitle = meta.title.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-    const safeSummary = meta.summary.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+    const safeTitle = meta.title
+      .replace(/\\/g, "\\\\")
+      .replace(/"/g, '\\"')
+      .replace(/\r?\n|\r/g, " ");
+    const safeSummary = meta.summary
+      .replace(/\\/g, "\\\\")
+      .replace(/"/g, '\\"')
+      .replace(/\r?\n|\r/g, " ");
 
     const tagsYaml = meta.tags.length > 0
       ? meta.tags.map((t) => `  - "${t}"`).join("\n")
@@ -160,7 +163,7 @@ toc_sticky: true
     console.log(`업데이트 완료: ${fileName}`);
   }
 
-  console.log("노션 글 동기화 작업이 성공적으로 완료되었습니다.");
+  console.log("🎉 모든 노션 글 동기화 작업이 성공적으로 완료되었습니다.");
 }
 
 syncNotionToJekyll().catch((err: unknown) => {
