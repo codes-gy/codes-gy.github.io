@@ -9,6 +9,7 @@ dotenv.config();
 
 const NOTION_API_KEY = process.env.NOTION_API_KEY;
 const validFiles = new Set<string>();
+
 const cleanDatabaseId = (id: string | undefined): string => {
   if (!id) return "";
   const match = id.replace(/-/g, "").match(/[a-f0-9]{32}/i);
@@ -49,8 +50,8 @@ function getProperty(props: PageObjectResponse["properties"], keyName: string) {
 function parseNotionProperties(page: PageObjectResponse): NotionPostProps {
   const props = page.properties;
 
-  // 1. Title 추출
-  let title = "Untitled";
+  // 1. Title 추출 (기본값을 빈 문자열로 변경)
+  let title = "";
   const titleProp = Object.values(props).find((p) => p.type === "title") || getProperty(props, "Title");
 
   if (titleProp && titleProp.type === "title" && Array.isArray(titleProp.title) && titleProp.title.length > 0) {
@@ -137,9 +138,15 @@ async function syncNotionToJekyll(): Promise<void> {
   for (const page of pages) {
     const meta = parseNotionProperties(page);
 
+    // 🚨 [방어 로직] 제목이 없거나 Untitled인 임시/빈 페이지는 생성 스킵
+    if (!meta.title || meta.title.toLowerCase() === "untitled") {
+      console.warn(`⚠️ 제목이 비어있어 스킵된 페이지 ID: ${page.id}`);
+      continue;
+    }
+
     const mdblocks = await n2m.pageToMarkdown(page.id);
     const mdObject = n2m.toMarkdownString(mdblocks);
-    const contentBody = mdObject.parent;
+    const contentBody = mdObject.parent || "";
 
     const safeTitle = meta.title
       .replace(/\\/g, "\\\\")
@@ -173,6 +180,8 @@ toc_sticky: true
 
     const fileName = `${meta.publishedAt}-${meta.slug}.md`;
     const filePath = path.join(targetDir, fileName);
+
+    // 유효한 파일만 목록에 기록 및 파일 생성
     validFiles.add(fileName);
     fs.writeFileSync(filePath, fullMarkdownContent, "utf8");
     console.log(`업데이트 완료: ${fileName} [제목: ${meta.title}]`);
@@ -182,11 +191,10 @@ toc_sticky: true
   const existingFiles = fs.readdirSync(targetDir);
 
   for (const file of existingFiles) {
-    // .md 파일이면서 이번 동기화에 들어있지 않은 경우 삭제
     if (file.endsWith(".md") && !validFiles.has(file)) {
       const removePath = path.join(targetDir, file);
       fs.unlinkSync(removePath);
-      console.log(`비활성 처리된 글 제거 완료: ${file}`);
+      console.log(`비활성 글 제거 완료: ${file}`);
     }
   }
 
