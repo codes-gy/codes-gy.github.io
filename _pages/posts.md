@@ -1,5 +1,5 @@
 ---
-title: "Posts"
+title: "최신 글"
 layout: home
 permalink: /posts/
 author_profile: true

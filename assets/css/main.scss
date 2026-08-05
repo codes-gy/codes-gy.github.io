@@ -198,7 +198,7 @@ div.highlighter-rouge, figure.highlight {
 }
 
 /* 2. About me 메인 페이지(permalink: /) 타이틀 숨기기 */
-body[class*="layout--single"] .page__inner-wrap .page__title {
+body.hide-title .page__inner-wrap .page__title {
   display: none !important;
 }
 
