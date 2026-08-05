@@ -1,6 +1,6 @@
 import { Client } from "@notionhq/client";
 import { NotionToMarkdown } from "notion-to-md";
-import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { PageObjectResponse, RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 import * as fs from "fs";
 import * as path from "path";
 import * as dotenv from "dotenv";
@@ -39,53 +39,67 @@ interface NotionPostProps {
   updatedAt: string;
 }
 
+function getProperty(props: PageObjectResponse["properties"], keyName: string) {
+  const targetKey = Object.keys(props).find(
+    (k) => k.toLowerCase() === keyName.toLowerCase()
+  );
+  return targetKey ? props[targetKey] : undefined;
+}
+
 function parseNotionProperties(page: PageObjectResponse): NotionPostProps {
   const props = page.properties;
 
-  // Title
-  const titleProperty = Object.values(props).find((prop) => prop.type === "title") || props.Title;
-
+  // 1. Title 추출
   let title = "Untitled";
-  if (titleProperty && titleProperty.type === "title" && titleProperty.title.length > 0) {
-    title = titleProperty.title.map((t) => t.plain_text).join("");
+  const titleProp = Object.values(props).find((p) => p.type === "title") || getProperty(props, "Title");
+
+  if (titleProp && titleProp.type === "title" && Array.isArray(titleProp.title) && titleProp.title.length > 0) {
+    const extractedTitle = (titleProp.title as RichTextItemResponse[])
+      .map((t: RichTextItemResponse) => t.plain_text)
+      .join("")
+      .trim();
+    if (extractedTitle) {
+      title = extractedTitle;
+    }
   }
 
-  // Category (Select)
-  const categoryProp = props.Category;
+  // 2. Category (Select)
+  const categoryProp = getProperty(props, "Category");
   const category = categoryProp?.type === "select" && categoryProp.select?.name
     ? categoryProp.select.name
     : "Uncategorized";
 
-  // Tag (Multi-select)
-  const tagProp = props.Tag;
-  const tags = tagProp?.type === "multi_select"
+  // 3. Tag (Multi-select)
+  const tagProp = getProperty(props, "Tag");
+  const tags = tagProp?.type === "multi_select" && Array.isArray(tagProp.multi_select)
     ? tagProp.multi_select.map((t) => t.name)
     : [];
 
-  // Slug
-  const slugProp = props.Slug;
-  const slug = slugProp?.type === "rich_text" && slugProp.rich_text[0]?.plain_text
-    ? slugProp.rich_text[0].plain_text
-    : page.id.replace(/-/g, "");
+  // 4. Slug
+  const slugProp = getProperty(props, "Slug");
+  const slugText = slugProp?.type === "rich_text" && Array.isArray(slugProp.rich_text)
+    ? (slugProp.rich_text as RichTextItemResponse[]).map((t: RichTextItemResponse) => t.plain_text).join("").trim()
+    : "";
+  const slug = slugText || page.id.replace(/-/g, "");
 
-  // Summary
-  const summaryProp = props.Summary;
-  const summary = summaryProp?.type === "rich_text" && summaryProp.rich_text[0]?.plain_text
-    ? summaryProp.rich_text[0].plain_text
+  // 5. Summary
+  const summaryProp = getProperty(props, "Summary");
+  const summary = summaryProp?.type === "rich_text" && Array.isArray(summaryProp.rich_text)
+    ? (summaryProp.rich_text as RichTextItemResponse[]).map((t: RichTextItemResponse) => t.plain_text).join("").trim()
     : "";
 
-  // Published (Checkbox)
-  const publishedProp = props.Published;
+  // 6. Published (Checkbox)
+  const publishedProp = getProperty(props, "Published");
   const published = publishedProp?.type === "checkbox" ? publishedProp.checkbox : false;
 
-  // PublishedAt (Date)
-  const publishedAtProp = props.PublishedAt;
+  // 7. PublishedAt (Date)
+  const publishedAtProp = getProperty(props, "PublishedAt");
   const publishedAt = publishedAtProp?.type === "date" && publishedAtProp.date?.start
     ? publishedAtProp.date.start
     : page.created_time.split("T")[0];
 
-  // UpdatedAt (Date)
-  const updatedAtProp = props.UpdatedAt;
+  // 8. UpdatedAt (Date)
+  const updatedAtProp = getProperty(props, "UpdatedAt");
   const updatedAt = updatedAtProp?.type === "date" && updatedAtProp.date?.start
     ? updatedAtProp.date.start
     : page.last_edited_time.split("T")[0];
@@ -96,7 +110,6 @@ function parseNotionProperties(page: PageObjectResponse): NotionPostProps {
 async function syncNotionToJekyll(): Promise<void> {
   console.log("노션 데이터베이스에서 발행 글 수집 시작...");
 
-  // SDK 공식 databases.query 메서드로 변경하여 URL 빌드 오류 방지
   const response = await notion.dataSources.query({
     data_source_id: NOTION_DATABASE_ID,
     filter: {
@@ -162,7 +175,7 @@ toc_sticky: true
     const filePath = path.join(targetDir, fileName);
 
     fs.writeFileSync(filePath, fullMarkdownContent, "utf8");
-    console.log(`업데이트 완료: ${fileName}`);
+    console.log(`업데이트 완료: ${fileName} [제목: ${meta.title}]`);
   }
 
   console.log("🎉 모든 노션 글 동기화 작업이 성공적으로 완료되었습니다.");
