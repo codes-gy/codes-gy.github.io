@@ -1,30 +1,42 @@
-<!--
-  Thanks for creating a Pull Request! Before you submit, please make sure
-  you've done the following:
+## 작업 유형
+- [ ] 기능 추가
+- [ ] 버그 수정
+- [ ] 리팩토링
+- [ ] 성능 개선
+- [ ] 구조/설계 변경
+- [ ] 기타
 
-  - Read the contributing document at https://github.com/mmistakes/minimal-mistakes#contributing
--->
 
-<!--
-  Choose one of the following by uncommenting it:
--->
 
-<!-- This is a bug fix. -->
-<!-- This is an enhancement or feature. -->
-<!-- This is a documentation change. -->
+---
 
-## Summary
+## 작업 내용
+- 
+-
+-
 
-<!--
-  Provide a description of what your pull request changes.
--->
+---
 
-## Context
+## 고민한 내용
+- 
+-
 
-<!--
-  Is this related to any GitHub issue(s)?
--->
+---
 
-<!--
-  Please confirm that you want to submit this Pull Request to Minimal Mistakes, the free Jekyll theme by Michael Rose, by deleting this comment block.
--->
+📋 체크리스트 (PR을 올리기 전에 스스로 확인해봐요!)
+- [x] PR 제목에 작업 내용을 요약하여 기재했는가?
+- [x] 코딩컨벤션을 준수하는가?
+- [x] 내 코드에 대해 스스로 검토를 했는가?
+
+---
+
+## 테스트
+- 
+-
+-
+
+---
+
+## 참고 사항
+- 
+- 
