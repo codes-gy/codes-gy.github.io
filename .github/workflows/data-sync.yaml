@@ -1,4 +1,4 @@
-name: Notion Webhook Sync to Posts
+name: 노션 동기화
 
 on:
   schedule:

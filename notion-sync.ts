@@ -9,7 +9,6 @@ dotenv.config();
 
 const NOTION_API_KEY = process.env.NOTION_API_KEY;
 
-// 데이터베이스 ID에서 하이픈 및 불필요한 URL 파라미터 자동 정제
 const cleanDatabaseId = (id: string | undefined): string => {
   if (!id) return "";
   const match = id.replace(/-/g, "").match(/[a-f0-9]{32}/i);
@@ -43,43 +42,48 @@ interface NotionPostProps {
 function parseNotionProperties(page: PageObjectResponse): NotionPostProps {
   const props = page.properties;
 
-  const titleProp = props.title;
+  // Title
+  const titleProp = props.Title;
   const title = titleProp?.type === "title" && titleProp.title[0]?.plain_text
     ? titleProp.title[0].plain_text
     : "Untitled";
 
-  let category = "Uncategorized";
-  const categoryProp = props.category;
-  if (categoryProp?.type === "select" && categoryProp.select?.name) {
-    category = categoryProp.select.name;
-  } else if (categoryProp?.type === "multi_select" && categoryProp.multi_select[0]?.name) {
-    category = categoryProp.multi_select[0].name;
-  }
+  // Category (Select)
+  const categoryProp = props.Category;
+  const category = categoryProp?.type === "select" && categoryProp.select?.name
+    ? categoryProp.select.name
+    : "Uncategorized";
 
-  const tagProp = props.tag;
+  // Tag (Multi-select)
+  const tagProp = props.Tag;
   const tags = tagProp?.type === "multi_select"
     ? tagProp.multi_select.map((t) => t.name)
     : [];
 
-  const slugProp = props.slug;
+  // Slug
+  const slugProp = props.Slug;
   const slug = slugProp?.type === "rich_text" && slugProp.rich_text[0]?.plain_text
     ? slugProp.rich_text[0].plain_text
     : page.id.replace(/-/g, "");
 
-  const summaryProp = props.summary;
+  // Summary
+  const summaryProp = props.Summary;
   const summary = summaryProp?.type === "rich_text" && summaryProp.rich_text[0]?.plain_text
     ? summaryProp.rich_text[0].plain_text
     : "";
 
-  const publishedProp = props.published;
+  // Published (Checkbox)
+  const publishedProp = props.Published;
   const published = publishedProp?.type === "checkbox" ? publishedProp.checkbox : false;
 
-  const publishedAtProp = props.publishedAt;
+  // PublishedAt (Date)
+  const publishedAtProp = props.PublishedAt;
   const publishedAt = publishedAtProp?.type === "date" && publishedAtProp.date?.start
     ? publishedAtProp.date.start
     : page.created_time.split("T")[0];
 
-  const updatedAtProp = props.updatedAt;
+  // UpdatedAt (Date)
+  const updatedAtProp = props.UpdatedAt;
   const updatedAt = updatedAtProp?.type === "date" && updatedAtProp.date?.start
     ? updatedAtProp.date.start
     : page.last_edited_time.split("T")[0];
@@ -90,13 +94,16 @@ function parseNotionProperties(page: PageObjectResponse): NotionPostProps {
 async function syncNotionToJekyll(): Promise<void> {
   console.log("노션 데이터베이스에서 발행 글 수집 시작...");
 
-  // 최신 SDK v5의 표준 dataSources 메서드 사용
-  const response = await notion.dataSources.query({
-    data_source_id: NOTION_DATABASE_ID,
-    filter: {
-      property: "published",
-      checkbox: {
-        equals: true,
+  // 노션 데이터베이스 속성명 'Published' 기준 조회
+  const response = await notion.request<{ results: Array<PageObjectResponse | Record<string, unknown>> }>({
+    path: `databases/${NOTION_DATABASE_ID}/query`,
+    method: "post",
+    body: {
+      filter: {
+        property: "Published",
+        checkbox: {
+          equals: true,
+        },
       },
     },
   });
@@ -153,7 +160,7 @@ toc_sticky: true
     console.log(`업데이트 완료: ${fileName}`);
   }
 
-  console.log("🎉 모든 노션 글 동기화 작업이 성공적으로 완료되었습니다.");
+  console.log("노션 글 동기화 작업이 성공적으로 완료되었습니다.");
 }
 
 syncNotionToJekyll().catch((err: unknown) => {
