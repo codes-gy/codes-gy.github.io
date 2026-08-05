@@ -66,7 +66,7 @@ async function syncNotionToJekyll() {
 
   // published 속성이 true인 항목만 가져오기
   const response: any = await notion.request({
-    path: `databases/${NOTION_DATABASE_ID}/query`,
+    path: `/databases/${NOTION_DATABASE_ID}/query`,
     method: "post",
     body: {
       filter: {
@@ -117,7 +117,7 @@ toc_sticky: true
 
     // 4. 파일 쓰기 (기존에 이미 존재하는 파일이면 내역 업데이트됨)
     fs.writeFileSync(filePath, fullMarkdownContent, "utf8");
-    console.log(`업데이트 완료: _posts/${fileName}`);
+    console.log(`업데이트 완료: ${fileName}`);
   }
 
   console.log("🎉 모든 노션 글 동기화 작업이 성공적으로 완료되었습니다.");
