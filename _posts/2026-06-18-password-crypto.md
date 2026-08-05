@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "bcrypt와 crypto를 활용한 안전한 사용자 비밀번호 암호화 및 단방향 해시 전략"
 date: 2026-06-18
 last_modified_at: 2026-07-15
 categories:

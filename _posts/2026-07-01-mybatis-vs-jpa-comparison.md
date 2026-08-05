@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "MyBatis에서 JPA로 전환하면 정말 생산성이 올라갈까? (장단점 비교)"
 date: 2026-07-01
 last_modified_at: 2026-07-30
 categories:

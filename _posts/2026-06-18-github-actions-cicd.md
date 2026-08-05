@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "GitHub Actions와 Docker로 구축하는 백엔드 서버 애플리케이션 자동 배포"
 date: 2026-06-18
 last_modified_at: 2026-07-15
 categories:

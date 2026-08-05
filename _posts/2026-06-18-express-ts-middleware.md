@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Express.js에서 TypeScript를 사용할 때 무조건 적용해야 하는 미들웨어 타입 안전성 확보하기"
 date: 2026-06-18
 last_modified_at: 2026-07-15
 categories:

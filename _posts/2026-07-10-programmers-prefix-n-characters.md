@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "[프로그래머스] 문자열의 앞의 n글자 (Python)"
 date: 2026-07-10
 last_modified_at: 2026-07-30
 categories:

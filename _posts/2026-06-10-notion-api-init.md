@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "나의 첫 Next.js 블로그 개발기"
 date: 2026-06-10
 last_modified_at: 2026-07-30
 categories:

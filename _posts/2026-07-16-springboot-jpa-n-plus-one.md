@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Spring Boot와 JPA 환경에서 N+1 문제 완벽하게 해결하기"
 date: 2026-07-16
 last_modified_at: 2026-07-15
 categories:

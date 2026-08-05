@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "객체 지향 개발을 위한 SOLID 원칙 5가지 실무 예제로 이해하기"
 date: 2026-06-17
 last_modified_at: 2026-07-15
 categories:

@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "그래프 알고리즘의 기초: BFS와 DFS의 작동 원리와 실무 코딩 테스트 활용 팁"
 date: 2026-06-23
 last_modified_at: 2026-07-20
 categories:

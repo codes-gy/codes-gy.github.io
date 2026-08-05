@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "\"Cannot find module\" 에러 원인과 tsconfig.json 완벽 가이드"
 date: 2026-06-18
 last_modified_at: 2026-07-16
 categories:

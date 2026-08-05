@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "파이썬 프로젝트 초기 세팅 가이드"
 date: 2026-07-01
 last_modified_at: 2026-07-01
 categories:

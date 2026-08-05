@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Jest와 Supertest를 활용한 Node.js API 서버 통합 테스트 구축하기"
 date: 2026-06-18
 last_modified_at: 2026-07-15
 categories:

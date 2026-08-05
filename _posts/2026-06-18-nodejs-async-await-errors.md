@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Node.js에서 async/await 사용 시 발생하는 흔한 실수와 에러 핸들링 패턴"
 date: 2026-06-18
 last_modified_at: 2026-06-18
 categories:

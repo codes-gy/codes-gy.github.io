@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "다이나믹 프로그래밍(DP)의 기초와 핵심 문제 풀이 전략"
 date: 2026-06-15
 last_modified_at: 2026-07-15
 categories:

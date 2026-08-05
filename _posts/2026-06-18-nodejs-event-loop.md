@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Node.js의 이벤트 루프(Event Loop) 구조와 싱글 스레드 논블로킹 I/O 원리 완벽 이해하기"
 date: 2026-06-18
 last_modified_at: 2026-07-15
 categories:

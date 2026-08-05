@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "JavaScript 프로젝트를 TypeScript로 점진적으로 전환하는 5단계 전략"
 date: 2026-06-18
 last_modified_at: 2026-07-15
 categories:

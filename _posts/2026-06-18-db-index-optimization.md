@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Node.js(Prisma) 환경에서 데이터베이스 인덱스 설정으로 조회 쿼리 속도 개선하기"
 date: 2026-06-18
 last_modified_at: 2026-07-15
 categories:

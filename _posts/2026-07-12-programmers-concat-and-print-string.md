@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "[프로그래머스] 문자열 붙여서 출력하기"
 date: 2026-07-12
 last_modified_at: 2026-07-22
 categories:
