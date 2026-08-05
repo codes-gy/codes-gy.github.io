@@ -8,7 +8,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const NOTION_API_KEY = process.env.NOTION_API_KEY;
-
+const validFiles = new Set<string>();
 const cleanDatabaseId = (id: string | undefined): string => {
   if (!id) return "";
   const match = id.replace(/-/g, "").match(/[a-f0-9]{32}/i);
@@ -173,12 +173,24 @@ toc_sticky: true
 
     const fileName = `${meta.publishedAt}-${meta.slug}.md`;
     const filePath = path.join(targetDir, fileName);
-
+    validFiles.add(fileName);
     fs.writeFileSync(filePath, fullMarkdownContent, "utf8");
     console.log(`업데이트 완료: ${fileName} [제목: ${meta.title}]`);
   }
 
-  console.log("🎉 모든 노션 글 동기화 작업이 성공적으로 완료되었습니다.");
+  console.log("기존 _posts 폴더 내 cleanup 검사 시작...");
+  const existingFiles = fs.readdirSync(targetDir);
+
+  for (const file of existingFiles) {
+    // .md 파일이면서 이번 동기화에 들어있지 않은 경우 삭제
+    if (file.endsWith(".md") && !validFiles.has(file)) {
+      const removePath = path.join(targetDir, file);
+      fs.unlinkSync(removePath);
+      console.log(`비활성 처리된 글 제거 완료: ${file}`);
+    }
+  }
+
+  console.log("모든 게시글 동기화 작업이 완료되었습니다.");
 }
 
 syncNotionToJekyll().catch((err: unknown) => {
