@@ -1,9 +1,6 @@
 import { Client } from "@notionhq/client";
 import { NotionToMarkdown } from "notion-to-md";
-import type {
-  PageObjectResponse,
-  QueryDatabaseResponse
-} from "@notionhq/client/build/src/api-endpoints";
+import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import * as fs from "fs";
 import * as path from "path";
 import * as dotenv from "dotenv";
@@ -12,6 +9,7 @@ dotenv.config();
 
 const NOTION_API_KEY = process.env.NOTION_API_KEY;
 
+// 데이터베이스 ID에서 하이픈 및 불필요한 URL 파라미터 자동 정제
 const cleanDatabaseId = (id: string | undefined): string => {
   if (!id) return "";
   const match = id.replace(/-/g, "").match(/[a-f0-9]{32}/i);
@@ -92,21 +90,21 @@ function parseNotionProperties(page: PageObjectResponse): NotionPostProps {
 async function syncNotionToJekyll(): Promise<void> {
   console.log("노션 데이터베이스에서 발행 글 수집 시작...");
 
-  const response = await notion.request<QueryDatabaseResponse>({
-    path: `databases/${NOTION_DATABASE_ID}/query`,
-    method: "post", // 대문자 처리
-    body: {
-      filter: {
-        property: "published",
-        checkbox: {
-          equals: true,
-        },
+  // 최신 SDK v5의 표준 dataSources 메서드 사용
+  const response = await notion.dataSources.query({
+    data_source_id: NOTION_DATABASE_ID,
+    filter: {
+      property: "published",
+      checkbox: {
+        equals: true,
       },
     },
   });
 
+  type QueryResultItem = typeof response.results[number];
+
   const pages = response.results.filter(
-    (result: QueryDatabaseResponse["results"][number]): result is PageObjectResponse =>
+    (result: QueryResultItem): result is PageObjectResponse =>
       "properties" in result
   );
 
@@ -124,11 +122,9 @@ async function syncNotionToJekyll(): Promise<void> {
     const mdObject = n2m.toMarkdownString(mdblocks);
     const contentBody = mdObject.parent;
 
-    // 안전한 문자열 이스케이프
     const safeTitle = meta.title.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
     const safeSummary = meta.summary.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 
-    // 태그 빈 배열 및 예외 처리
     const tagsYaml = meta.tags.length > 0
       ? meta.tags.map((t) => `  - "${t}"`).join("\n")
       : "  []";
