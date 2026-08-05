@@ -43,10 +43,12 @@ function parseNotionProperties(page: PageObjectResponse): NotionPostProps {
   const props = page.properties;
 
   // Title
-  const titleProp = props.Title;
-  const title = titleProp?.type === "title" && titleProp.title[0]?.plain_text
-    ? titleProp.title[0].plain_text
-    : "Untitled";
+  const titleProperty = Object.values(props).find((prop) => prop.type === "title") || props.Title;
+
+  let title = "Untitled";
+  if (titleProperty && titleProperty.type === "title" && titleProperty.title.length > 0) {
+    title = titleProperty.title.map((t) => t.plain_text).join("");
+  }
 
   // Category (Select)
   const categoryProp = props.Category;
