@@ -1,11 +1,12 @@
 ---
 title: "Node.js의 이벤트 루프(Event Loop) 구조와 싱글 스레드 논블로킹 I/O 원리 완벽 이해하기"
 date: 2026-06-18
-last_modified_at: 2026-07-15
+last_modified_at: 2026-08-06
 categories:
-  - "Node.js"
+  - "백엔드"
 tags:
-  []
+  - "TypeScript"
+  - "Node.js"
 excerpt: "Node.js의 핵심인 이벤트 루프의 6가지 단계별 구동 메커니즘을 파악하고 비동기 논블로킹 I/O가 싱글 스레드에서 내부적으로 처리되는 원리를 완벽하게 이해합니다."
 toc: true
 toc_sticky: true

@@ -1,11 +1,12 @@
 ---
 title: "Node.js에서 async/await 사용 시 발생하는 흔한 실수와 에러 핸들링 패턴"
 date: 2026-06-18
-last_modified_at: 2026-06-18
+last_modified_at: 2026-08-06
 categories:
-  - "Node.js"
+  - "백엔드"
 tags:
-  []
+  - "TypeScript"
+  - "Node.js"
 excerpt: "비동기 처리 과정에서 개발자가 자주 범하는 실수를 짚어보고, try-catch 문과 Catch-all 미들웨어를 활용한 안정적인 백엔드 에러 핸들링 패턴을 구축합니다."
 toc: true
 toc_sticky: true

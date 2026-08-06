@@ -1,11 +1,11 @@
 ---
 title: "파이썬 프로젝트 초기 세팅 가이드"
 date: 2026-07-01
-last_modified_at: 2026-08-05
+last_modified_at: 2026-08-06
 categories:
-  - "Python"
+  - "백엔드"
 tags:
-  []
+  - "Python"
 excerpt: "파이썬 백엔드 개발(FastAPI)을 시작할 때 반드시 거쳐야 하는 필수 초기 세팅 방법을 정리한 가이드입니다."
 toc: true
 toc_sticky: true

@@ -1,18 +1,16 @@
 ---
 title: "MyBatis에서 JPA로 전환하면 정말 생산성이 올라갈까? (장단점 비교)"
 date: 2026-07-01
-last_modified_at: 2026-07-30
+last_modified_at: 2026-08-06
 categories:
-  - "자바"
+  - "백엔드"
 tags:
-  []
+  - "JPA"
+  - "ORM"
 excerpt: "MyBatis와 JPA의 개념 차이를 살펴보고, 각 기술의 장단점 및 실무에서의 활용법을 다룹니다."
 toc: true
 toc_sticky: true
 ---
-
-
-JPA와 MyBatis는 각각 명확한 장단점이 존재합니다.
 
 
 ## JPA vs MyBatis 비교

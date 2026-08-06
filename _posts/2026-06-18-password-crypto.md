@@ -1,11 +1,12 @@
 ---
 title: "bcrypt와 crypto를 활용한 안전한 사용자 비밀번호 암호화 및 단방향 해시 전략"
 date: 2026-06-18
-last_modified_at: 2026-07-15
+last_modified_at: 2026-08-06
 categories:
-  - "Node.js"
+  - "백엔드"
 tags:
-  []
+  - "TypeScript"
+  - "Node.js"
 excerpt: "bcrypt의 솔팅(Salting) 개념을 이해하고 내장 crypto 모듈과 비교하여, 레인보우 테이블 공격으로부터 사용자 비밀번호를 안전하게 보호하는 단방향 해시 구현법을 다룹니다."
 toc: true
 toc_sticky: true
@@ -92,7 +93,7 @@ export const comparePasswordBcrypt = async (password: string, hashedPassword: st
 `crypto`처럼 개발자가 직접 Salt 문정이나 구분자를 엮어서 가공할 필요가 없기 때문에 실수가 적고 코드 가독성이 극대화됩니다.
 
 
-## 4. 실무 필수 체크리스트: bcrypt와 crypto 선택의 기로
+## 4. bcrypt와 crypto 선택
 
 
 두 기술 모두 프로덕션 환경에서 사용하기에 충분히 안전하지만, 프로젝트의 특성에 따라 다음과 같은 기준을 가지고 선택해야 합니다.
@@ -100,7 +101,7 @@ export const comparePasswordBcrypt = async (password: string, hashedPassword: st
 - **컴퓨팅 리소스와 CPU 제어**: `bcrypt`는 CPU 연산 위주로 작동하므로 Cost 하이퍼파라미터를 너무 높이면(예: 14 이상) 서버 인증 요청이 몰릴 때 CPU 점유율이 100%를 치고 올라가 서브 자원이 고갈되는 장애를 유발할 수 있습니다. 2026년 기준 일반적인 웹 API 서버라면 **`SALT_ROUNDS = 12`** 내외가 가장 적합합니다.
 - **외부 의존성 제약(Enterprise)**: 금융권이나 공공기관처럼 외부 라이브러리(`node_modules`) 설치 보안 검수가 엄격한 엔터프라이즈 환경이라면, 패키지 취약점 리스크가 없는 Node.js 내장 모듈인 `crypto`를 활용해 커스텀 PBKDF2 모듈을 만들어 관리하는 것이 거버넌스 측면에서 훨씬 유리합니다.
 
-## 5. 결론: 정보 보안의 시작과 끝은 올바른 해시 전략부터
+## 5. 결론
 
 
 비밀번호 암호화는 단순히 컴파일 에러를 안 나게 처리하는 것을 넘어, 최악의 침해 사고가 발생했을 때 기업과 사용자의 자산을 지켜주는 최후의 보루입니다.

@@ -1,11 +1,13 @@
 ---
 title: "Spring Boot와 JPA 환경에서 N+1 문제 완벽하게 해결하기"
 date: 2026-07-16
-last_modified_at: 2026-07-15
+last_modified_at: 2026-08-06
 categories:
-  - "자바"
+  - "백엔드"
 tags:
-  []
+  - "Spring Boot"
+  - "Java"
+  - "JPA"
 excerpt: "데이터베이스 조회 성능 저하의 주범인 JPA N+1 문제의 발생 원인을 분석하고, Fetch Join과 EntityGraph를 통해 쿼리를 최적화하는 방법을 살펴봅니다."
 toc: true
 toc_sticky: true

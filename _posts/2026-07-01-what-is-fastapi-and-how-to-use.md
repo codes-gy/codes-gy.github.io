@@ -1,11 +1,11 @@
 ---
 title: "Python의 고성능 웹 프레임워크, FastAPI 핵심 요약"
 date: 2026-07-01
-last_modified_at: 2026-07-15
+last_modified_at: 2026-08-06
 categories:
-  - "Python"
+  - "백엔드"
 tags:
-  []
+  - "Python"
 excerpt: "Python 환경에서 비동기(Async) 기반의 고성능 API 서버를 가장 쉽고 빠르게 구축할 수 있는 웹 프레임워크인 FastAPI의 핵심 특징과 기본 구동 방법에 대해 알아봅니다."
 toc: true
 toc_sticky: true

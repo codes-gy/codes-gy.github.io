@@ -1,11 +1,11 @@
 ---
 title: "\"Cannot find module\" 에러 원인과 tsconfig.json 완벽 가이드"
 date: 2026-06-18
-last_modified_at: 2026-07-16
+last_modified_at: 2026-08-06
 categories:
-  - "타입스크립트"
+  - "백엔드"
 tags:
-  []
+  - "TypeScript"
 excerpt: "TypeScript에서 모듈을 찾지 못하는 원인을 파악하고 tsconfig.json의 경로 매핑 설정을 통해 에러를 완벽하게 해결하는 방법을 알아봅니다."
 toc: true
 toc_sticky: true
@@ -126,5 +126,5 @@ ts-node -r tsconfig-paths/register src/index.ts
 정적 타이핑 언어인 TypeScript를 쓰는 가장 큰 가치는 "에러를 사용자가 마주하는 런타임이 아닌, 개발자가 코드를 치는 빌드 타임에 마주하는 것"에 있습니다.
 
 
-`Cannot find module` 에러는 경로 추적에 실패한 컴파일러가 우리에게 보내는 SOS 신호입니다. 오늘 살펴본 `baseUrl`과 `paths` 아키텍처를 프로젝트 초기에 견고하게 잡아두면, 스케일업 과정에서 경로가 뒤엉켜 빌드가 터지는 불상사를 원천 차단할 수 있습니다.
+`Cannot find module` 에러는 경로 추적에 실패한 컴파일러가 우리에게 보내는 SOS 신호입니다. `baseUrl`과 `paths` 아키텍처를 프로젝트 초기에 견고하게 잡아두면, 스케일업 과정에서 경로가 뒤엉켜 빌드가 터지는 불상사를 원천 차단할 수 있습니다.
 

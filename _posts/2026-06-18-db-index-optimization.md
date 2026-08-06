@@ -1,11 +1,13 @@
 ---
 title: "Node.js(Prisma) 환경에서 데이터베이스 인덱스 설정으로 조회 쿼리 속도 개선하기"
 date: 2026-06-18
-last_modified_at: 2026-07-15
+last_modified_at: 2026-08-06
 categories:
-  - "Node.js"
+  - "백엔드"
 tags:
-  []
+  - "TypeScript"
+  - "Node.js"
+  - "Prisma"
 excerpt: "대용량 테이블 조회 시 발생하는 성능 병목을 해결하기 위해, Prisma 스키마에 복합 인덱스를 정의하고 실행 계획을 최적화하여 쿼리 속도를 향상시킵니다."
 toc: true
 toc_sticky: true

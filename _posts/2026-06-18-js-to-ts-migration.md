@@ -1,11 +1,13 @@
 ---
 title: "JavaScript 프로젝트를 TypeScript로 점진적으로 전환하는 5단계 전략"
 date: 2026-06-18
-last_modified_at: 2026-07-15
+last_modified_at: 2026-08-06
 categories:
-  - "타입스크립트"
+  - "백엔드"
 tags:
-  []
+  - "TypeScript"
+  - "JavaScript"
+  - "Node.js"
 excerpt: "기존 자바스크립트 프로젝트의 서비스를 중단하지 않고, tsconfig 환경 설정부터 자바스크립트 파일을 하나씩 .ts로 바꾸어 나가는 실무 마이그레이션 전략입니다."
 toc: true
 toc_sticky: true
@@ -18,7 +20,7 @@ toc_sticky: true
 하지만 이미 프로덕션에서 활발히 구동 중인 수만 줄의 JavaScript 코드를 한 번에 TypeScript로 바꾸는 것은 불가능에 가깝습니다. 비즈니스 기능을 새로 개발하면서 기존 시스템을 빅뱅 방식으로 전환하다가는 감당할 수 없는 버그와 배포 지연을 마주하게 됩니다. 가장 현명한 접근법은 "점진적 마이그레이션(Gradual Migration)"입니다. 2026년 현재 모던 아키텍처 환경에서도 권장되는, 기존 서비스를 안전하게 유지하며 시스템 체질을 바꾸는 5단계 전략을 소개합니다.
 
 
-## 1단계: 환경 설정 및 공존 레이어 구축 (`allowJs` 활성화)
+## 1단계: 환경 설정
 
 
 점진적 전환의 첫걸음은 JavaScript와 TypeScript 코드가 프로젝트 내부에서 사이좋게 공존할 수 있는 환경을 만드는 것입니다. 소스 코드를 건드리기 전에 인프라 세팅부터 시작합니다.

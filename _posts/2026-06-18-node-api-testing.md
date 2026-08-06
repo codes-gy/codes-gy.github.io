@@ -1,11 +1,11 @@
 ---
 title: "Jest와 Supertest를 활용한 Node.js API 서버 통합 테스트 구축하기"
 date: 2026-06-18
-last_modified_at: 2026-07-15
+last_modified_at: 2026-08-06
 categories:
   - "테스트"
 tags:
-  []
+  - "TypeScript"
 excerpt: "Jest와 Supertest를 연동하여 실제 HTTP 요청을 시뮬레이션하고, Node.js API 서버의 엔드포인트 비즈니스 로직을 완벽하게 검증하는 통합 테스트 환경을 구축합니다."
 toc: true
 toc_sticky: true
@@ -18,13 +18,10 @@ toc_sticky: true
 이번 포스팅에서는 Node.js 생태계의 표준 테스트 프레임워크인 **Jest**와 HTTP 검증 최적화 라이브러리인 **Supertest**를 결합하여, 실제 가동 중인 서버 환경과 동일하게 API 엔드포인트의 입력과 출력을 완벽히 통제하고 검증하는 통합 테스트 구축 가이드를 공유합니다.
 
 
-## 1. 통합 테스트 환경의 필수 조건과 패키지 세팅
+## 1. 통합 테스트 환경의 필수 조건
 
 
 통합 테스트의 핵심은 "실제 HTTP 요청을 날렸을 때 시스템이 우리가 정의한 RESTful 규격에 맞게 응답하는가"를 확인하는 것입니다. 이를 위해 개발 환경에 필요한 핵심 의존성을 주입합니다.
-
-
-Bash
 
 
 ```plain text
@@ -32,7 +29,7 @@ npm install -D jest supertest ts-jest @types/jest @types/supertest
 ```
 
 
-### ⚙️ `jest.config.json` 설정 (TypeScript 환경 기준)
+### ⚙️ `jest.config.json` 설정
 
 
 테스트 환경이 안전하게 구동되도록 Jest 환경 설정 파일의 뼈대를 잡습니다.
@@ -53,7 +50,7 @@ npm install -D jest supertest ts-jest @types/jest @types/supertest
 ```
 
 
-## 2. 실무 테스트 아키텍처의 황금 규칙: `app`과 `server` 분리하기
+## 2. `app`과 `server` 분리하기
 
 
 Supertest를 활용한 통합 테스트를 작성할 때 많은 개발자가 범하는 치명적인 실수가 있습니다. 테스트 코드가 실행될 때마다 `app.listen(3000)`이 호출되어 "Port 3000 is already in use"라는 포트 충돌 에러와 함께 프로세스가 뻗어버리는 현상입니다.
@@ -62,7 +59,7 @@ Supertest를 활용한 통합 테스트를 작성할 때 많은 개발자가 범
 이를 방지하기 위해 Express/Fastify 인스턴스를 정의하는 계층(`app.ts`)과 실제 네트워크 포트를 열어 바인딩하는 진입점 계층(`server.ts`)을 칼같이 분리해야 합니다.
 
 
-### 📄 파일 1: `src/app.ts` (서버 설정 및 라우터 정의)
+### 파일 1: `src/app.ts` (서버 설정 및 라우터 정의)
 
 
 ```json
@@ -85,7 +82,7 @@ export default app;
 
 
 
-📄 파일 2: `src/server.ts` (실제 구동 진입점)
+📄 파일 2: `src/server.ts`
 
 
 
@@ -101,7 +98,7 @@ app.listen(PORT, () => {
 ```
 
 
-## 3. Supertest를 활용한 엔드포인트 검증 코드 작성 (`user.test.ts`)
+## 3. 엔드포인트 검증 코드 작성 (`user.test.ts`)
 
 
 이제 분리된 `app` 구조를 가져와 Supertest로 정상 케이스와 예외 케이스(404 에러 등)를 연쇄적으로 검증하는 통합 테스트 코드를 작성합니다.
@@ -141,7 +138,7 @@ describe('👥 User API 엔드포인트 통합 테스트', () => {
 ```
 
 
-## 4. 실무 필수 체크리스트: 테스트 DB 격리와 커넥션 누수 방지
+## 4. 체크리스트
 
 
 통합 테스트 패키지를 무결점으로 굴리기 위해 현업 DevOps 파이프라인에서 무조건 지켜야 하는 제약사항입니다.
@@ -149,7 +146,7 @@ describe('👥 User API 엔드포인트 통합 테스트', () => {
 1. **글로벌 DB 커넥션 댕글링(Dangling) 방지**: 테스트가 끝났는데도 데이터베이스 커넥션 풀이 열려 있으면 Jest는 프로세스를 종료하지 못하고 멈춰 서게 됩니다. 각 테스트 스펙 파일 하단이나 글로벌 셋업에 **`afterAll(async () => { await db.close(); });`** 구문을 강제하여 리소스를 반환해야 합니다.
 2. **테스트 전용 데이터베이스 격리**: 통합 테스트가 실제 운영(Prod) DB나 개발(Dev) DB의 데이터를 조작하게 두면 기존 데이터가 오염되거나 테스트 결과가 깨집니다. 반드시 `.env.test` 환경 변수를 분리 주입하여 로컬 도커(Docker) 기반의 격리된 인메모리 DB(예: SQLite)나 테스트 전용 스키마에서 `beforeEach` 단계마다 데이터를 초기화(`TRUNCATE`)하고 독립적으로 실행되도록 제어해야 합니다.
 
-## 5. 결론: 견고한 테스트 코드가 가져다주는 진정한 배포의 자유
+## 5. 결론
 
 
 많은 개발 팀이 일정 압박을 이유로 테스트 코드 작성을 생략하곤 합니다. 하지만 테스트 코드가 없는 프로젝트는 코드를 수정할 때마다 "혹시 다른 곳이 고장 나지 않았을까?" 하는 막연한 두려움 속에 수동으로 API를 하나씩 찔러보는 엄청난 물리적 시간 낭비를 초래하게 됩니다.

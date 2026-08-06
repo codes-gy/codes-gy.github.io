@@ -1,11 +1,13 @@
 ---
 title: "나의 첫 Next.js 블로그 개발"
 date: 2026-06-10
-last_modified_at: 2026-08-05
+last_modified_at: 2026-08-06
 categories:
-  - "리액트"
+  - "프론트엔드"
 tags:
-  []
+  - "Next.js"
+  - "React"
+  - "TypeScript"
 excerpt: "Notion API를 활용해서 블로그 데이터를 가져오는 방법을 정리합니다."
 toc: true
 toc_sticky: true
@@ -298,6 +300,7 @@ URL은 이런 형태로 만들어진다.
 
 
 ```typescript
+{% raw %}
 export default async function PostDetailPage({ params }: PageProps) {
   const { slug } = await params;
 
@@ -316,6 +319,7 @@ export default async function PostDetailPage({ params }: PageProps) {
     </main>
   );
 }
+{% endraw %}
 ```
 
 
