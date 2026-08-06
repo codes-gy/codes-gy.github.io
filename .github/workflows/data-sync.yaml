@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: 1. 코드 가져오기
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: 2. Node.js 설정
         uses: actions/setup-node@v4
@@ -35,4 +37,8 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add _posts/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "feat: 노션 웹훅 트리거 포스트 자동 업데이트" && git push)
+          git diff --quiet && git diff --staged --quiet || (
+            git commit -m "feat: 노션 웹훅 트리거 포스트 자동 업데이트" && \
+            git pull --rebase origin master && \
+            git push origin master
+          )
