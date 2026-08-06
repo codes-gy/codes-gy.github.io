@@ -1,0 +1,22 @@
+{% if page.layout == "home" %}
+<div class="sidebar__categories" style="margin-top: 1.5rem; border-top: 1px solid #e5e7eb; padding-top: 1rem;">
+  <h3 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem; color: #111827;">
+    📂 카테고리
+  </h3>
+  <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem;">
+    {% assign sorted_categories = site.categories | sort %}
+    {% for category in sorted_categories %}
+    {% capture category_name %}{{ category[0] }}{% endcapture %}
+    <li style="margin-bottom: 0.4rem;">
+      <a href="{{ '/categories/#' | append: (category_name | slugify) | relative_url }}"
+         style="display: flex; justify-content: space-between; align-items: center; color: #4b5563; text-decoration: none;">
+        <span>{{ category_name }}</span>
+        <span style="background-color: #f3f4f6; color: #6b7280; padding: 0.1rem 0.45rem; border-radius: 10px; font-size: 0.75rem; font-weight: 600;">
+            {{ category[1].size }}
+          </span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}

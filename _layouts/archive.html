@@ -22,6 +22,15 @@ layout: default
     {% unless page.header.overlay_color or page.header.overlay_image %}
       <h1 id="page-title" class="page__title"{% if page.locale %} lang="{{ page.locale }}"{% endif %}>{{ page.title }}</h1>
     {% endunless %}
+
+    {% if site.search == true %}
+    <div class="archive__search-bar" style="margin-bottom: 1.5rem; text-align: right;">
+      <button class="search__toggle btn btn--primary" type="button" style="padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+        <i class="fas fa-search"></i> 포스트 검색
+      </button>
+    </div>
+    {% endif %}
+
     {{ content }}
   </div>
 </div>

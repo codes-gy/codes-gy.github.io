@@ -1,26 +1,78 @@
 ---
 layout: single
-title: "About Me"
+title: "대용량 데이터 최적화와 시스템 안정성을 고민하는 백엔드 개발자"
 permalink: /
 author_profile: true
+classes: wide
 ---
 
-## 👋 안녕하세요, 개발자 [이름]입니다.
-
-Node.js 및 Java 기반의 백엔드 시스템 개발을 즐겨합니다.
-복잡한 문제를 간단하고 명확하게 해결하는 코드를 작성하는 데 관심이 많습니다.
-
----
-
-### 🛠 Tech Stack
-* **Backend**: Node.js, Express, Java, Spring Boot
-* **Database**: PostgreSQL, MySQL, Redis
-* **DevOps**: Docker, GitHub Actions, AWS
+# [이름 입력] (Backend Developer)
+> **"시스템의 안정성과 확장성은 우수한 비즈니스 가치의 기반이 된다."**  
+> 금융, 보험, 교육 등 다양한 분야에서 백엔드 시스템 설계, 대용량 데이터 처리, 쿼리 및 성능 최적화를 주도해 온 백엔드 엔지니어입니다. 문제 상황을 정확히 정의하고 적절한 기술적 선택을 통해 비즈니스 문제를 해결합니다.
 
 ---
 
-### 💼 Experience & Projects
-* **DevLog 블로그 운영** (2026.01 ~ 현재)
-* Notion API와 TypeScript를 연동한 자동화 블로그 구축
-* **[프로젝트명]** (2025.06 ~ 2025.12)
-* 프로젝트 설명 및 주요 성과 작성
+## Work Experience
+
+### [회사명 입력]
+**Backend Developer** | `2018. 04 - 2025. 06`
+
+* **금융/보험 계약 관리 및 시스템 운영 고도화** (`2021. 11 - 2025. 06`)
+  * **설명:** 대고객 공식 홈페이지 시스템 운영, 대용량 보험 계약/대출 조회 쿼리 성능 개선 및 주요 백엔드 프로세스 개발
+  * **주요 성과:**
+    * 테이블 풀 스캔 쿼리에 복합 인덱스를 적용하여 DB I/O 비용 45% 절감
+    * 파일 I/O 병목 구간 개선 및 비동기 처리 도입으로 보험증권 발급 속도 45% 개선
+    * 비정형 데이터 스크래핑 파싱 에러율 감소 (8.2% → 1% 이내) 및 상품 공시 공통 모듈화를 통한 배포 기간 50% 단축 (14일 → 7일)
+  * **Tech Stack:** `Java`, `Spring`, `MyBatis`, `Oracle`, `Redis`
+
+* **전사 자원 관리 및 통합 대시보드 구축** (`2021. 04 - 2021. 11`)
+  * **설명:** 사내 업무 프로세스 효율화를 위한 전사 자원 관리 시스템 및 실시간 KPI 통합 대시보드 구축
+  * **주요 성과:**
+    * 전자결재 시스템 웹화로 결재 소요 시간 50% 이상 단축 및 실시간 KPI 시각화로 의사결정 속도 30% 개선
+    * AI 음성인식 기반 회의록 작성 기능 추가로 작성 시간 70% 감소 및 SSE 기반 알림, PDF 자동 생성 API 구축
+  * **Tech Stack:** `Java`, `Spring Boot`, `RabbitMQ`, `SSE`, `MySQL`
+
+* **교육 플랫폼 웹사이트 재구축 프로젝트** (`2018. 04 - 2019. 12`)
+  * **설명:** 전자정부프레임워크 최신 사양 기반 인프라 재구축, 공통 모듈 설계 및 대량 도서 카탈로그 처리 고도화
+  * **주요 성과:**
+    * 공통 로직 모듈화 및 리팩토링으로 전체 API 개발 공수 15일 단축
+    * 연령별 맞춤 추천 API 적용으로 상품 클릭 전환율 25% 향상 및 OAuth2 간편 로그인 적용으로 가입 이탈률 35% 감소
+    * CMS 실시간 노출 기능 구현으로 콘텐츠 반영 대기 시간 90% 이상 단축
+  * **Tech Stack:** `Java`, `Spring`, `MyBatis`, `MS-SQL`, `OAuth2`
+
+* **학원/교육기관 B2B 출결 자동화 서비스** (`2018. 04 - 2019. 07`)
+  * **설명** 웹/모바일 단말기 연동 실시간 출결 이벤트 처리 및 대외 알림 파이프라인 구축
+  * **주요 성과**
+    * 대용량 엑셀 일괄 등록 시 청크 단위 분할 처리 적용으로 메모리 초과 해결 및 업로드 속도 50% 향상
+    * 알림톡 발송 실패 시 일반 SMS로 자동 전환되는 비동기 폴백(Fallback) 구조 구축
+    * 출결 현황 대시보드 집계 쿼리 최적화 및 캐싱 적용으로 API 응답 시간 60% 단축
+  * **Tech Stack:** `Java`, `Spring`, `MyBatis`, `MySQL`, `Thymeleaf`
+
+---
+
+## Education
+
+* **고려사이버대학교** 컴퓨터공학 전공 학사 (`졸업예정`)
+  *
+  *
+
+---
+
+## Skills
+
+* **Overall**
+  *  
+* **Communication*
+  * 
+* **Java**
+  * 
+* **Node.js**
+  * 
+
+---
+
+## Contact
+
+* **Email:** [podojjang@naver.com](mailto:podojjang_kr@naver.com)
+* **Blog:** [your-blog-url.com](https://codes-gy.github.io)
+* **GitHub:** [github.com/codes-gy](https://github.com/codes-gy)

@@ -11,257 +11,31 @@ search: false
 /* ==========================================================================
    전체 사이트 글로벌 폰트 축소
    ========================================================================== */
-
-/* 1. 기본 폰트 크기 감축 (기본 16px -> 14.5px) */
 html {
-  font-size: 14.5px !important;
+  font-size: 14px !important; /* PC 기준 (필요시 13px~14.5px로 조절) */
+
+  @media (max-width: 48em) {
+    font-size: 13px !important; /* 모바일/태블릿 화면 폰트 축소 */
+  }
 }
 
-/* 사이드바 프로필 폰트 크기 조절 */
-.sidebar {
-  font-size: 0.85rem !important;
-}
-
-/* ==========================================================================
-   포스트 상세페이지 커스텀 스타일
-   ========================================================================== */
-
-/* 1. 포스트 메인 제목 영역 크기 축소 */
+/* 2. 주요 세부 영역 폰트 보정 */
 .page__title {
-  font-size: 1.8rem !important;
-  font-weight: 800 !important;
-  line-height: 1.3 !important;
-  letter-spacing: -0.02em;
-  color: #111827;
-  margin-bottom: 0.5rem !important;
+  font-size: 1.5rem !important; /* 게시글/페이지 제목 */
 }
 
-/* 2. 본문 폰트 및 소제목 밸런스 조정 */
 .page__content {
-  font-size: 1rem !important;
-  line-height: 1.7 !important;
-  color: #374151;
+  font-size: 0.95rem !important; /* 본문 글자 크기 */
 
-  h1 { font-size: 1.6rem !important; }
-
-  h2 {
-    font-size: 1.35rem !important;
-    font-weight: 700;
-    color: #111827;
-    border-bottom: 2px solid #e5e7eb;
-    padding-bottom: 0.4rem;
-    margin-top: 2.2rem !important;
-    margin-bottom: 1rem !important;
-  }
-
-  h3 {
-    font-size: 1.15rem !important;
-    font-weight: 600;
-    color: #1f2937;
-    margin-top: 1.6rem !important;
-    margin-bottom: 0.8rem !important;
-  }
-
-  /* 인용구 모던 스타일링 */
-  blockquote {
-    border-left: 4px solid #3b82f6 !important;
-    background-color: #eff6ff !important;
-    color: #1e40af;
-    padding: 0.8rem 1.2rem !important;
-    border-radius: 0 8px 8px 0;
-    margin: 1.5rem 0 !important;
-    font-style: normal !important;
-  }
-
-  /* 인라인 코드 강조 */
-  code.highlighter-rouge {
-    background-color: #f3f4f6 !important;
-    color: #eb5757 !important;
-    font-size: 0.85em !important;
-    padding: 0.2em 0.4em !important;
-    border-radius: 4px;
-    border: none !important;
-  }
+  h1 { font-size: 1.35rem !important; }
+  h2 { font-size: 1.2rem !important; }
+  h3 { font-size: 1.05rem !important; }
 }
 
-/* 3. 상단 메타 정보 (카테고리 및 날짜) */
-.custom-post-header-meta {
-  display: flex;
-  align-items: center;
-  font-size: 0.8rem;
-  margin-bottom: 0.5rem;
-
-  .meta-left {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .meta-divider {
-    color: #cbd5e1;
-  }
-
-  time {
-    color: #64748b;
-    font-size: 0.78rem;
-  }
-}
-
-/* 상단 초소형 카테고리 뱃지 */
-.custom-category-list {
-  display: inline-flex;
-  gap: 0.3rem;
-
-  .badge-category {
-    font-size: 0.7rem !important;
-    font-weight: 700;
-    color: #2563eb;
-    background-color: #eff6ff;
-    border: 1px solid #dbeafe;
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-    letter-spacing: -0.01em;
-  }
-}
-
-/* 실선 구분선 */
-.custom-divider {
-  border: 0;
-  border-top: 1px solid #f1f5f9;
-  margin: 1.5rem 0 2rem 0;
-}
-
-/* 4. 노션 콜아웃/Notice 상자 커스텀 */
-.notice, .notice--info {
-  background-color: #f8fafc !important;
-  border: 1px solid #e2e8f0 !important;
-  border-left: 4px solid #0284c7 !important;
-  border-radius: 8px !important;
-  padding: 1em 1.2em !important;
-  margin: 1.5em 0 !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-/* 5. 코드 블록 라운딩 및 그림자 */
-div.highlighter-rouge, figure.highlight {
-  border-radius: 8px !important;
-  overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  margin: 1.5em 0 !important;
-}
-
-/* 6. 하단 태그 전용 영역 */
-.custom-post-footer {
-  margin-top: 2.5rem;
-  padding-top: 1.2rem;
-  border-top: 1px solid #f1f5f9;
-}
-
-.custom-tag-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.35rem;
-
-  .tag-title {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #64748b;
-    margin-right: 0.2rem;
-  }
-
-  /* 하단 초소형 태그 뱃지 */
-  .badge-tag {
-    font-size: 0.7rem !important;
-    font-weight: 500;
-    color: #475569;
-    background-color: #f8fafc;
-    border: 1px solid #e2e8f0;
-    padding: 0.15rem 0.5rem;
-    border-radius: 12px;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: #f1f5f9;
-      color: #0f172a;
-    }
-  }
-}
-
-/* ==========================================================================
-   특수 숨김 처리
-   ========================================================================== */
-
-/* 1. 이전/다음 글 버튼 및 기존 테마 태그/카테고리 영역 완전 숨기기 */
-.pagination, .page__taxonomy {
-  display: none !important;
-}
-
-/* 2. About me 메인 페이지(permalink: /) 타이틀 숨기기 */
-body.hide-title .page__inner-wrap .page__title {
-  display: none !important;
-}
-
-/* ==========================================================================
-   사이드바 영역 크기 확대 커스텀
-   ========================================================================== */
-
-/* 1. 사이드바 전체 너비 확대 (기본 약 200px~240px -> 280px로 확대) */
 .sidebar {
-  width: 280px !important;
-  font-size: 0.95rem !important; /* 사이드바 텍스트 크기 확대 */
+  font-size: 1.15rem !important; /* 프로필 및 좌측 사이드바 */
 }
 
-/* 2. 사이드바 내부 프로필 이미지 크기 확대 */
-.author__avatar {
-  img {
-    max-width: 130px !important; /* 프로필 이미지 크기 확대 (기본값 약 100px) */
-    height: auto !important;
-  }
-}
-
-/* 3. 프로필 이름 및 소개 문구 폰트 확대 */
-.author__name {
-  font-size: 1.25rem !important;
-}
-
-.author__bio {
-  font-size: 0.9rem !important;
-  line-height: 1.5 !important;
-}
-
-/* 4. 데스크톱 반응형 화면에서 사이드바와 본문 사이 간격 유지 */
-@media (min-width: 64em) {
-  .sidebar {
-    padding-right: 1.5rem !important;
-  }
-}
-
-
-/* ==========================================================================
-   상단 검색 버튼 & 검색창 크기 축소
-   ========================================================================== */
-
-/* 1. 상단 네비게이션바 검색 토글 버튼 축소 */
-.search-toggle {
-  font-size: 0.85rem !important; /* 돋보기 아이콘 및 텍스트 크기 축소 */
-  padding: 0.3rem 0.6rem !important; /* 버튼 내여백 축소 */
-  height: auto !important;
-}
-
-/* 2. 검색창 모달/오버레이 입력창 크기 및 폰트 축소 */
-.search-content {
-  .search-input {
-    font-size: 1.1rem !important; /* 검색 입력창 폰트 크기 축소 */
-    padding: 0.5em 0.8em !important; /* 입력창 내부 여백 축소 */
-  }
-
-  /* 검색 결과 목록 폰트 크기 축소 */
-  .search-results {
-    font-size: 0.85rem !important;
-
-    .result__title {
-      font-size: 1rem !important;
-    }
-  }
+.masthead {
+  font-size: 1.05rem !important; /* 상단 메뉴 바 */
 }
