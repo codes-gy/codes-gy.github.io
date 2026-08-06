@@ -65,7 +65,7 @@ Supertest를 활용한 통합 테스트를 작성할 때 많은 개발자가 범
 ### 📄 파일 1: `src/app.ts` (서버 설정 및 라우터 정의)
 
 
-```json
+```
 import express from 'express';
 const app = express();
 
@@ -90,7 +90,7 @@ export default app;
 
 
 
-```json
+```
 import app from './app';
 const PORT = process.env.PORT || 3000;
 

@@ -247,7 +247,7 @@ return {
 - 요약문
 - 더 읽어보기 버튼
 
-```typescript
+```
 <Link href={`/posts/${post.slug}`}>
   <div className="aspect-[16/9] overflow-hidden">
     <img
@@ -296,8 +296,8 @@ URL은 이런 형태로 만들어진다.
 
 상세 페이지에서는 `slug` 값을 받아 Notion에서 해당 글을 조회했다.
 
-
-```typescript
+{% raw %}
+```
 export default async function PostDetailPage({ params }: PageProps) {
   const { slug } = await params;
 
@@ -317,7 +317,7 @@ export default async function PostDetailPage({ params }: PageProps) {
   );
 }
 ```
-
+{% endraw %}
 
 글이 존재하지 않거나 Published가 false라면 `notFound()`를 호출해서 404 페이지로 보내도록 했다.
 
@@ -420,7 +420,7 @@ switch (block.type) {
 Tailwind CSS의 `dark:` 클래스를 사용해 다크모드를 적용했다.
 
 
-```typescript
+```
 <main className="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
   ...
 </main>
@@ -656,7 +656,7 @@ await incrementLikeCount(slug);
 상세 페이지에서는 좋아요 수를 보여준다.
 
 
-```typescript
+```
 <button>
   좋아요 {likeCount}
 </button>
@@ -734,7 +734,7 @@ const comments = await getComments(slug);
 화면에서는 다음과 같이 출력했다.
 
 
-```typescript
+```
 {comments.map((comment) => (
   <div key={comment.id}>
     <strong>{comment.author}</strong>
